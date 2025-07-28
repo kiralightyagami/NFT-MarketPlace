@@ -19,7 +19,8 @@ pub mod marketplace {
     }
 
     pub fn nft_list(ctx: Context<NftList>, price: u64) -> Result<()> {
-        ctx.accounts.nft_list(price)?;
+        ctx.accounts.init_listing(ctx.bumps, price)?;
+        ctx.accounts.transfer_nft()?;
         Ok(())
     }
 }
