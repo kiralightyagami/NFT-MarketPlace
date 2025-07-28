@@ -17,6 +17,11 @@ pub mod marketplace {
             ctx.accounts.init_marketplace(fee_percentage, ctx.bumps)?;
         Ok(())
     }
+
+    pub fn nft_list(ctx: Context<NftList>, price: u64) -> Result<()> {
+        ctx.accounts.nft_list(price)?;
+        Ok(())
+    }
 }
 
 
