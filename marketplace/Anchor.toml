@@ -5,7 +5,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-marketplace = "Cnx2CbtdJPDMMhwiAtSDxwYm14vhnRnTyQyvSi4wn9ff"
+marketplace = "DQCMzBuzsRpP5PAuQqocwVgd7wn8QxesihEzJMGsfYN4"
 
 [registry]
 url = "https://api.apr.dev"
