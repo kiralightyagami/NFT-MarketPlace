@@ -3,9 +3,10 @@ use anchor_lang::prelude::*;
 
 declare_id!();
 
-mod instructions;
-mod states;
-
+pub mod instructions;
+pub mod states;
+pub mod error;
+pub mod constants;
 
 pub use instructions::*;
 
@@ -24,8 +25,15 @@ pub mod marketplace {
         Ok(())
     }
 
-    pub fn nft_delist(ctx: Context<NftDelist>) -> Result<()> {
+    pub fn delist_nft(ctx: Context<NftDelist>) -> Result<()> {
         ctx.accounts.transfer_nft_back()?;
+        Ok(())
+    }
+
+    pub fn purchase_nft(ctx: Context<NftBuy>) -> Result<()> {
+        ctx.accounts.transfer_nft()?;
+        ctx.accounts.transfer_sol()?;
+        ctx.accounts.delist_nft()?;
         Ok(())
     }
 }

@@ -8,4 +8,5 @@ pub struct Listing {
     pub bump: u8,
     pub item_mint: Pubkey,
     pub item_price: u64,
+    pub is_active: bool,
 }

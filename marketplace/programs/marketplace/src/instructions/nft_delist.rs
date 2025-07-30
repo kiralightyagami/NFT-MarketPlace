@@ -1,8 +1,15 @@
-use anchor_lang::prelude::*;
-use crate::states::*;
-use anchor_spl::token::*;
-use anchor_spl::token_interface::*;
+use anchor_lang::{
+    prelude::*,
+};
+use anchor_spl::{
+    token::{transfer_checked, Token, TransferChecked},
+    token_interface::{Mint, TokenAccount},
+};
 
+use crate::{
+    error::MarketplaceError,
+    states::{Listing, Marketplace},
+};
 
 
 #[derive(Accounts)]
@@ -49,6 +56,10 @@ pub struct NftDelist<'info> {
 
 impl<'info> NftDelist<'info> {
    pub fn transfer_nft_back (&mut self) -> Result<()> {
+    
+    require!(self.listing.is_active && self.listing.seller_authority == self.seller_authority.key(), MarketplaceError::ListingNotActive);
+    
+
     let marketplace = &self.marketplace.key();
     let seller_authority = &self.seller_authority.key();
     
@@ -62,11 +73,12 @@ impl<'info> NftDelist<'info> {
             to: self.seller_token_account.to_account_info(),
             mint: self.nft.to_account_info(),
             authority: self.listing.to_account_info(),
-        }
-        &signer,
+        },
+        signer,
     );
 
     transfer_checked(cpi_ctx, 1,0)?;
+    Ok(())
    }
 
 }

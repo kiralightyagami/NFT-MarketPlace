@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use crate::states::*;
-
+use crate::error::MarketplaceError;
 
 
 #[derive(Accounts)]
@@ -27,6 +27,8 @@ pub struct InitMarketplace<'info> {
 
 impl<'info> InitMarketplace<'info> {
     pub fn init_marketplace(&mut self, fee_percentage: u8, bumps: InitMarketplaceBumps) -> Result<()> {
+        require!(fee_percentage <= 100, MarketplaceError::InvalidFeePercentage);
+        
         self.marketplace.set_inner(Marketplace {    
             authority: self.authority.key(),
             fee_percentage,

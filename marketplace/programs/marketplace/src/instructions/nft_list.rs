@@ -1,9 +1,16 @@
-use anchor_lang::prelude::*;
-use crate::states::*;
-use anchor_spl::token::*;
-use anchor_spl::token_interface::*;
+use anchor_lang::{
+    prelude::*,
+};
+use anchor_spl::{
+    associated_token::AssociatedToken,
+    token::{transfer_checked, Token, TransferChecked},
+    token_interface::{Mint, TokenAccount},
+};
 
-
+use crate::{
+    error::MarketplaceError,
+    states::{Listing, Marketplace},
+};
 
 #[derive(Accounts)]
 pub struct NftList<'info> {
@@ -69,14 +76,20 @@ impl<'info> NftList<'info> {
     );
 
     transfer_checked(cpi_ctx, 1,0)?;
+    Ok(())
    }
 
    pub fn init_listing (&mut self, bumps: NftListBumps, price: u64) -> Result<()> {
+    if price == 0 {
+        return Err(MarketplaceError::InvalidPrice.into());
+    }
+    
     self.listing.set_inner(Listing {
         seller_authority: self.seller_authority.key(),
         item_mint: self.nft.key(),
         item_price: price,   
         bump: bumps.listing,
+        is_active: true,
     });
     Ok(())
    }
