@@ -23,6 +23,11 @@ pub mod marketplace {
         ctx.accounts.transfer_nft()?;
         Ok(())
     }
+
+    pub fn nft_delist(ctx: Context<NftDelist>) -> Result<()> {
+        ctx.accounts.transfer_nft_back()?;
+        Ok(())
+    }
 }
 
 
