@@ -215,14 +215,6 @@ A: Rent is returned to the seller when delisting (via `close = seller_authority`
 
 ---
 
-## 📞 Support & Community
-
-- **Discord:** [Join our community](https://discord.gg/your-server)
-- **Twitter:** [@YourProject](https://twitter.com/yourproject)
-- **Documentation:** [Full Docs](https://docs.yourproject.com)
-
----
-
 ## Why Solana?
 
 This marketplace leverages Solana's unique advantages:
